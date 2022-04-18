@@ -120,6 +120,7 @@
                             <pojos>true</pojos>
                             <records>true</records>
                         </generate>
+
                         <target>
                             <!-- структура пакетов относительно основной директории -->
                             <packageName>com.example.demo</packageName>
