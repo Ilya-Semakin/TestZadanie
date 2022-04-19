@@ -79,6 +79,17 @@
             <artifactId>HikariCP</artifactId>
             <version>5.0.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>8.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.openapi</groupId>
+            <artifactId>micronaut-openapi</artifactId>
+            <version>4.0.1</version>
+        </dependency>
 
     </dependencies>
 
