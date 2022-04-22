@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +29,12 @@ public class EmployeeService {
 		return dslContext.selectFrom(Tables.EMPLOYEE)
 				.fetchInto(Employee.class);
 	}
+
+	public Boolean delete(Long id){
+		return dslContext.deleteFrom(Tables.EMPLOYEE)
+				.where(Tables.EMPLOYEE.ID.eq(id))
+				.execute()==1;
+	}
+
 
 }

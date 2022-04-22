@@ -1,5 +1,6 @@
 package com.example.testzadanie;
 
+import com.example.demo.Tables;
 import com.example.demo.tables.pojos.Employee;
 import com.example.demo.tables.pojos.Task;
 import com.example.testzadanie.service.EmployeeService;
@@ -12,35 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-@RestController
+@CrossOrigin(origins = "http://localhost:3000/")
 @SpringBootApplication
-@RequestMapping("/employee")
-@RequiredArgsConstructor
 public class TestZadanieApplication {
 
-	private final EmployeeService employeeService;
-	private final TaskService taskService;
-
-	@PostMapping("/add")
-	public String addEmployee(@RequestBody Employee employee){
-		employeeService.insertEmployee(employee);
-		return "employee add";
-	}
-	@GetMapping
-	public List<Employee> getEmployee(){
-		return  employeeService.getEmployee();
-	}
-
-
-	@PostMapping("/task")
-	public String addTask(@RequestBody Task task){
-		taskService.insertTask(task);
-		return "task add";
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(TestZadanieApplication.class, args);
 	}
 
 }
+
