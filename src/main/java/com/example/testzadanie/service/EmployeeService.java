@@ -2,12 +2,16 @@ package com.example.testzadanie.service;
 
 import com.example.demo.Tables;
 import com.example.demo.tables.pojos.Employee;
+import com.example.demo.tables.records.EmployeeRecord;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jooq.Name;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.exception.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -17,13 +21,20 @@ public class EmployeeService {
 
 	private final DSLContext dslContext;
 
-	public void insertEmployee(Employee employee){
-		dslContext.insertInto(Tables.EMPLOYEE,Tables.EMPLOYEE.ID,Tables.EMPLOYEE.FULLNAME,
-				Tables.EMPLOYEE.LEADER,Tables.EMPLOYEE.BRANCH)
-				.values(employee.getId(),employee.getFullname(),
-						employee.getLeader(),employee.getBranch())
-				.execute();
+
+
+
+	public Employee	createEmployee(Employee employee){
+		EmployeeRecord employeeRecord =dslContext.insertInto(Tables.EMPLOYEE)
+				.set(Tables.EMPLOYEE.FULLNAME, employee.getFullname())
+				.set(Tables.EMPLOYEE.LEADER, employee.getLeader())
+				.set(Tables.EMPLOYEE.BRANCH,employee.getBranch())
+				.returning(Tables.EMPLOYEE.ID)
+				.fetchOne();
+		employee.setId(employeeRecord.getId());
+		return employee;
 	}
+
 
 	public List<Employee> getEmployee(){
 		return dslContext.selectFrom(Tables.EMPLOYEE)
@@ -37,4 +48,15 @@ public class EmployeeService {
 	}
 
 
+
+/*	public Long insert(Employee employee){
+		return dslContext.insertInto(Tables.EMPLOYEE)
+				.set(dslContext.newRecord(Tables.EMPLOYEE,employee))
+				.returning(Tables.EMPLOYEE.ID)
+				.fetchOptional()
+				.orElseThrow(() -> new DataAccessException("error inserting:" + Tables.EMPLOYEE.ID))
+				.get(Tables.EMPLOYEE.ID);
+	}
+*/
 }
+
